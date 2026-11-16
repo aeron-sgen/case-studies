@@ -212,7 +212,7 @@
 </head>
 <body class="site-body loc-page dzr-page cs-index">
 <a class="skip" href="#main">Skip to content</a>
-<!-- dzr:chrome-header (live directory chrome, shell/chrome.json; do not edit) -->
+<!-- dzr:chrome-header (live directory chrome, shell/chrome.json, with the Results menu of src/results-menu.mjs; do not edit) -->
 <header class="rail-shell site-header" id="rail-shell">
 <div class="rail-dock" id="rail-dock">
 <div class="rail">
@@ -228,7 +228,12 @@ Services
 <svg class="rail__caret" viewBox="0 0 10 10" fill="none" aria-hidden="true" focusable="false"><path d="M1.5 3.5 5 7l3.5-3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </button>
 </li>
-<li><a class="rail__link" href="/case-studies">Results</a></li>
+<li class="rail__group">
+<button class="rail__link rail__trigger" type="button" data-panel="panel-results" aria-expanded="false" aria-controls="panel-results">
+Results
+<svg class="rail__caret" viewBox="0 0 10 10" fill="none" aria-hidden="true" focusable="false"><path d="M1.5 3.5 5 7l3.5-3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+</li>
 <li class="rail__group">
 <button class="rail__link rail__trigger" type="button" data-panel="panel-resources" aria-expanded="false" aria-controls="panel-resources">
 Resources
@@ -441,6 +446,30 @@ Resources
 </div>
 </div>
 </div>
+<div class="rail-panel rail-panel--services rail-panel--results" id="panel-results" role="region" aria-label="Results">
+<div class="panel__head">
+<span class="panel__eyebrow">Our results</span>
+<span class="panel__note">59 of our 72 client stores are in the Google Maps top&nbsp;3. Start at the <a class="panel__note-link" href="/case-studies">case studies</a>.</span>
+</div>
+<div class="svc-body">
+<a class="svc-preview svc-preview--gate" href="/case-studies">
+<span class="svc-preview__title">Ranking<br>case studies</span>
+<span class="svc-preview__desc">All 35 case studies</span>
+</a>
+<div class="rsm">
+<ul class="rsm__grid" role="list">
+<li class="rsm-tile"><a class="rsm-tile__a" href="/case-studies/high-society"><span class="rsm-tile__map"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/case-studies/_assets/menu/high-society.webp" alt="" width="480" height="300" decoding="async"></span><span class="rsm-tile__rank">#1</span><span class="rsm-tile__label"><span class="rsm-tile__name">High Society</span><span class="rsm-tile__sub">in 8 Michigan Counties</span><span class="rsm-tile__where">8 stores · Michigan</span></span></a></li>
+<li class="rsm-tile"><a class="rsm-tile__a" href="/case-studies/flora-terra"><span class="rsm-tile__map"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/case-studies/_assets/menu/flora-terra.webp" alt="" width="480" height="300" decoding="async"></span><span class="rsm-tile__rank">#1</span><span class="rsm-tile__label"><span class="rsm-tile__name">Flora Terra</span><span class="rsm-tile__sub">of 3,340 in California</span><span class="rsm-tile__where">3 stores · California</span></span></a></li>
+<li class="rsm-tile"><a class="rsm-tile__a" href="/case-studies/nova-farms"><span class="rsm-tile__map"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/case-studies/_assets/menu/nova-farms.webp" alt="" width="480" height="300" decoding="async"></span><span class="rsm-tile__rank">#1</span><span class="rsm-tile__label"><span class="rsm-tile__name">Nova Farms</span><span class="rsm-tile__sub">of 684 in All of Maine</span><span class="rsm-tile__where">5 stores · ME, MA and NJ</span></span></a></li>
+<li class="rsm-tile"><a class="rsm-tile__a" href="/case-studies/cookies"><span class="rsm-tile__map"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/case-studies/_assets/menu/cookies.webp" alt="" width="480" height="300" decoding="async"></span><span class="rsm-tile__rank">#1</span><span class="rsm-tile__label"><span class="rsm-tile__name">Cookies</span><span class="rsm-tile__sub">of 233 in Bernalillo County</span><span class="rsm-tile__where">2 stores · New Mexico</span></span></a></li>
+<li class="rsm-tile"><a class="rsm-tile__a" href="/case-studies/get-bakd"><span class="rsm-tile__map"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/case-studies/_assets/menu/get-bakd.webp" alt="" width="480" height="300" decoding="async"></span><span class="rsm-tile__rank">#1</span><span class="rsm-tile__label"><span class="rsm-tile__name">Get Bak&#39;d</span><span class="rsm-tile__sub">of 65 in Edmond, OK</span><span class="rsm-tile__where">Edmond, Oklahoma</span></span></a></li>
+<li class="rsm-tile"><a class="rsm-tile__a" href="/case-studies/halfpipe-cannabis"><span class="rsm-tile__map"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/case-studies/_assets/menu/halfpipe-cannabis.webp" alt="" width="480" height="300" decoding="async"></span><span class="rsm-tile__rank">#1</span><span class="rsm-tile__label"><span class="rsm-tile__name">Halfpipe Cannabis</span><span class="rsm-tile__sub">of 32 in Moss Landing, CA</span><span class="rsm-tile__where">Seaside, California</span></span></a></li>
+</ul>
+<p class="rsm__more"><span class="rsm__more-k">Rankings by state</span><a href="https://dispenza.com/local-cannabis-marketing/california">California</a><a href="https://dispenza.com/local-cannabis-marketing/colorado">Colorado</a><a href="https://dispenza.com/local-cannabis-marketing/maine">Maine</a><a href="https://dispenza.com/local-cannabis-marketing/massachusetts">Massachusetts</a><a href="https://dispenza.com/local-cannabis-marketing/michigan">Michigan</a><a href="https://dispenza.com/local-cannabis-marketing/nevada">Nevada</a><a href="https://dispenza.com/local-cannabis-marketing/new-jersey">New Jersey</a><a href="https://dispenza.com/local-cannabis-marketing/new-mexico">New Mexico</a><a href="https://dispenza.com/local-cannabis-marketing/new-york">New York</a><a href="https://dispenza.com/local-cannabis-marketing/oklahoma">Oklahoma</a><a href="https://dispenza.com/local-cannabis-marketing/pennsylvania">Pennsylvania</a><a href="https://dispenza.com/local-cannabis-marketing/washington">Washington</a><a class="rsm__board" href="https://dispenza.com/local-cannabis-marketing/agencies">Agency leaderboard <span aria-hidden="true">&rarr;</span></a></p>
+</div>
+</div>
+</div>
+<script>(function(){var p=document.getElementById('panel-results');if(!p)return;var d=0;function go(){if(d)return;d=1;var a=p.querySelectorAll('img[data-src]');for(var i=0;i<a.length;i++){a[i].src=a[i].getAttribute('data-src');a[i].removeAttribute('data-src');}}var t=document.querySelector('[data-panel="panel-results"]');if(t){t.parentNode.addEventListener('pointerenter',go);t.addEventListener('focus',go);t.addEventListener('click',go);}if(window.MutationObserver){new MutationObserver(function(){if(p.classList.contains('is-open'))go();}).observe(p,{attributes:true,attributeFilter:['class']});}})();</script>
 </div>
 </header>
 <div class="drawer-scrim" id="drawer-scrim" hidden></div>
@@ -476,7 +505,25 @@ Services
 </ul>
 </div>
 </li>
-<li><a class="drawer-link" href="/case-studies">Results</a></li>
+<li>
+<button class="acc-trigger" type="button" data-acc="acc-results" aria-expanded="false" aria-controls="acc-results">
+Results
+<svg class="rail__caret" viewBox="0 0 10 10" fill="none" aria-hidden="true" focusable="false"><path d="M1.5 3.5 5 7l3.5-3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<div class="acc-sub" id="acc-results">
+<ul>
+<li><a href="/case-studies"><strong>All 35 case studies</strong></a></li>
+<li><a href="/case-studies/high-society">High Society: #1 in 8 Michigan Counties</a></li>
+<li><a href="/case-studies/flora-terra">Flora Terra: #1 of 3,340 in California</a></li>
+<li><a href="/case-studies/nova-farms">Nova Farms: #1 of 684 in All of Maine</a></li>
+<li><a href="/case-studies/cookies">Cookies: #1 of 233 in Bernalillo County</a></li>
+<li><a href="/case-studies/get-bakd">Get Bak&#39;d: #1 of 65 in Edmond, OK</a></li>
+<li><a href="/case-studies/halfpipe-cannabis">Halfpipe Cannabis: #1 of 32 in Moss Landing, CA</a></li>
+<li><a href="https://dispenza.com/local-cannabis-marketing">Rankings by state</a></li>
+<li><a href="https://dispenza.com/local-cannabis-marketing/agencies">Agency leaderboard</a></li>
+</ul>
+</div>
+</li>
 <li>
 <button class="acc-trigger" type="button" data-acc="acc-resources" aria-expanded="false" aria-controls="acc-resources">
 Resources
