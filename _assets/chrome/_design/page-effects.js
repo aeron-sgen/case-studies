@@ -129,6 +129,8 @@
       var triggers = [].slice.call(doc.querySelectorAll('[data-panel]'));
 
       function setPanel(trigger, open) {
+        /* any close ends a hover-open, so the next click is a plain toggle again */
+        if (!open) trigger._viaHover = false;
         var panel = doc.getElementById(trigger.getAttribute('data-panel'));
         if (!panel) return;
         trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -142,14 +144,25 @@
       triggers.forEach(function (trigger) {
         trigger.addEventListener('click', function () {
           var open = trigger.getAttribute('aria-expanded') === 'true';
+          /* HOVER THEN CLICK PINS, it does not close. On a mouse the group's
+             mouseenter has already opened the panel by the time the click lands, so a
+             plain toggle shut the menu the visitor had just clicked to open. The first
+             click after a hover-open keeps it open; the next one closes it. Keyboard
+             and touch never set the flag, so for them this stays the plain toggle. */
+          if (open && trigger._viaHover) { trigger._viaHover = false; return; }
           closePanels(trigger);
           setPanel(trigger, !open);
         });
         var group = trigger.parentNode;
         group.addEventListener('mouseenter', function () {
           if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            /* only a hover that OPENS the panel marks it. The panel sits outside the
+               group, so coming back up from it re-fires mouseenter on an open (maybe
+               already pinned) panel, and that must not re-arm the pin. */
+            var wasOpen = trigger.getAttribute('aria-expanded') === 'true';
             closePanels(trigger);
             setPanel(trigger, true);
+            if (!wasOpen) trigger._viaHover = true;
           }
         });
       });

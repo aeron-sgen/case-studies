@@ -464,7 +464,7 @@ Resources
           <div class="tc-metrics">
           <div class="tc-metric" data-reveal="">
             <span class="tc-metric__figure"><span data-count-to="180" data-count-dec="0" data-count-prefix="+" data-count-suffix="%">+180%</span></span>
-            <span class="tc-metric__label">INCREASE IN WEBSITE</span>
+            <span class="tc-metric__label">INCREASE IN WEBSITE VISITS</span>
           </div>
           <div class="tc-metric" data-reveal="">
             <span class="tc-metric__figure"><span data-count-to="161" data-count-dec="0" data-count-prefix="+" data-count-suffix="%">+161%</span></span>
@@ -480,7 +480,6 @@ Resources
         <article class="tc-sec" id="firehouse-solv">
           <h2 class="tc-sec__h" data-reveal="">SHARE OF LOCAL VOICE (SOLV)</h2>
           <h3 class="tc-emph" data-reveal="">KEYPHRASE: "DISPENSARY NEAR ME"</h3>
-          <div class="tc-metrics">
               <!-- SOURCE DEFECT - THE SOLV FIGURE IS WITHHELD, AND THERE IS NO REAL ONE TO PUT BACK.
                    The source publishes "999900.00% in 6mo" here. client-rules.json
                    overclaim.solv_absolute bans it outright - "firehouse SOLV figure. Not a defensible
@@ -496,11 +495,10 @@ Resources
                    heading, its keyphrase and the before/after rank grid - which is the actual evidence,
                    published by the client themselves: rank 20+ across the map on the left, rank 1
                    across the map on the right. The claim survives; only the indefensible number goes.
-                   Restore a figure here the moment the owner supplies the true SOLV percentage. -->
-              <div class="tc-metric" data-reveal="">
-                <span class="tc-metric__label">INCREASE IN SOLV FOR "DISPENSARY NEAR ME"</span>
-              </div>
-</div>
+                   Restore a figure here the moment the owner supplies the true SOLV percentage.
+                   2026-11-19: the empty label-only stat cell (label INCREASE IN SOLV FOR "DISPENSARY NEAR ME",
+                   no figure) and its .tc-metrics wrapper were removed. To restore, re-add a .tc-metrics
+                   wrapper holding one .tc-metric with the true figure and that label. -->
         <figure class="tc-plate tc-lift" data-media-in="">
           <img src="/case-studies/_assets/proof/firehouse/firehouse_solv.webp" alt="Local search rank grid, before and after: red rank 20 plus pins on the left, green rank 1 pins on the right." width="1133" height="454" loading="lazy" decoding="async">
         </figure>
@@ -558,9 +556,9 @@ Resources
             <li class="tc-list__item"><strong class="tc-lead-in">Google Business Profile Management</strong> — categories, service area, hours, attributes, photos, products and posts kept current; the profile is where "dispensary near me" is won or lost.</li>
           </ul>
           <div class="tc-copy">
-            <p class="mc-body" data-reveal="">Local SEO is what turned the rebuilt site into search visibility. The page's own headline puts the first ranking movement inside 30 days; the two measured figures below are what that movement produced over the case window.</p>
+            <p class="mc-body" data-reveal="">Local SEO is what turned the rebuilt site into search visibility. The page's own headline puts the first ranking movement inside 30 days; the measured figures above are what that movement produced over the case window.</p>
+            <p class="mc-body" data-reveal="">See how we run <a href="https://dispenza.com/locations/california/los-angeles-county">dispensary local SEO in Los Angeles County</a>.</p>
           </div>
-        <p class="tc-emph" data-reveal=""><a href="https://dispenza.com/locations/california/los-angeles-county">dispensary local SEO in Los Angeles County</a>.</p>
           </article>
 
         <article class="tc-sec" id="firehouse-more">
@@ -568,8 +566,9 @@ Resources
           <ul class="tc-cases" data-reveal="">
             <li class="tc-case">
               <div class="tc-case__copy">
-                <p class="tc-case__loc">300% Phone Call Increase</p>
-                <h3 class="tc-case__h">Sales Records Just 4 Months In</h3>
+                <p class="tc-case__loc">350% Direction Request Increase</p>
+                <h3 class="tc-case__h">700% Sales Increase</h3>
+                <p class="csx-case__where">NuLeaf NV</p>
                 <div class="mc-actions"><a class="btn btn--ghost" href="/case-studies/nuleafnv">VIEW CASE STUDY</a></div>
               </div>
               <div class="tc-case__media">
@@ -581,8 +580,9 @@ Resources
             </li>
             <li class="tc-case">
               <div class="tc-case__copy">
-                <p class="tc-case__loc">+5.3% Search Requests</p>
-                <h3 class="tc-case__h">+11x Direction Requests</h3>
+                <p class="tc-case__loc">300% Phone Call Increase</p>
+                <h3 class="tc-case__h">Sales Records Just 4 Months In</h3>
+                <p class="csx-case__where">NorCal Holistics</p>
                 <div class="mc-actions"><a class="btn btn--ghost" href="/case-studies/norcal">VIEW CASE STUDY</a></div>
               </div>
               <div class="tc-case__media">
@@ -596,6 +596,7 @@ Resources
               <div class="tc-case__copy">
                 <p class="tc-case__loc">480% Direction Request Increase</p>
                 <h3 class="tc-case__h">110% Sales Increase</h3>
+                <p class="csx-case__where">The Cannabis Guys</p>
                 <div class="mc-actions"><a class="btn btn--ghost" href="/case-studies/tcg">VIEW CASE STUDY</a></div>
               </div>
               <div class="tc-case__media">
@@ -607,8 +608,9 @@ Resources
             </li>
             <li class="tc-case">
               <div class="tc-case__copy">
-                <p class="tc-case__loc">+1504% Increase In Discovery Traffic</p>
-                <h3 class="tc-case__h">180% Website Visits</h3>
+                <p class="tc-case__loc">+5.3% Search Requests</p>
+                <h3 class="tc-case__h">+11x Direction Requests</h3>
+                <p class="csx-case__where">FLWR CO</p>
                 <div class="mc-actions"><a class="btn btn--ghost" href="/case-studies/flwrco">VIEW CASE STUDY</a></div>
               </div>
               <div class="tc-case__media">
@@ -721,7 +723,7 @@ if(d.readyState==='complete')setTimeout(go,0);else w.addEventListener('load',fun
 </div>
 </footer>
 <!-- /dzr:chrome-footer -->
-<script src="/case-studies/_assets/chrome/_design/page-effects.js?v=1d1766f3" defer></script>
+<script src="/case-studies/_assets/chrome/_design/page-effects.js?v=7c7166f2" defer></script>
 <script src="/case-studies/_assets/chrome/cta-events.js?v=dbc812d7" defer></script>
 <script src="/case-studies/_assets/kit.js" defer></script>
 </body>

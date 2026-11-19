@@ -527,3 +527,25 @@ body.dzr-page:has([data-dzr-sticky]) .site-footer { padding-bottom: 84px; }
 .rsm__more a:focus-visible{outline:2px solid var(--ds-accent-ink);outline-offset:2px}
 .rsm__more a.rsm__board{margin-left:auto;font-family:var(--ds-font-display);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ds-accent-light)}
 @media (prefers-reduced-motion:reduce){.rsm-tile{transition:none}.rsm-tile:hover,.rsm-tile:focus-within{transform:none}}
+
+/* ---- share-copy fixes B2 / B3 / B7 / H44 (2026-11-19) ---------------------------------------------------------------
+   Added by hand to this built file; the kit source (shell/build-kit.mjs inputs) does not have it yet.
+   B2  desktop dropdown panels: an open panel is capped at the screen height under the fixed header and scrolls.
+   B3  the sticky "Book my demo" bar slides away while the phone menu is open (the drawer sets html.is-drawer-open).
+   B7  "More case studies" card logos get one consistent box. The store-name line (.csx-case__where) gets the exact
+       values most pages' own CSS already gives it, for the older-template pages whose CSS has no such rule (so pages
+       that do carry it do not change).
+   H44 hub page cards (index.html): the store name in the card's screen-reader-only h3.mc-sr is shown, in hub cards only. */
+.rail-panel { max-height: calc(100vh - 100px); max-height: calc(100dvh - 100px); overflow-y: auto; overscroll-behavior: contain; }
+/* A scrolling panel clips its own hover bridge (.rail-panel.is-open::after sits ~10px ABOVE the panel to cover the gap
+   under the header), so the bridge is re-made on the dock while a panel is open: moving the mouse down from the header
+   into the panel never leaves #rail-dock, and its mouseleave does not close the panel mid-move. */
+.rail-dock:has(> .rail-panel.is-open)::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: calc(var(--ds-space-xs) + 2px); }
+html.is-drawer-open .dzf-p-sticky { transform: translateY(110%) !important; visibility: hidden; }
+/* older-template cards only: the logo is a direct child of .tc-case__media (newer cards wrap it in a .csx-plate chip
+   and already print the store name, so they keep their own sizing) */
+.tc-case__media > img.tc-case__logo { height: 56px; width: auto; max-width: 200px; object-fit: contain; object-position: left center; }
+.tc-case .csx-case__where { margin: var(--ds-space-xs) 0 0; font-size: 15px; color: var(--ds-ink-soft); }
+.rs-jrn__body > h3.mc-sr { position: static; width: auto; height: auto; margin: 0 0 var(--ds-space-2xs); padding: 0; clip: auto; clip-path: none;
+  overflow: visible; white-space: normal; border: 0; font-family: var(--ds-font-display); font-size: 17px; font-weight: 800; line-height: 1.2;
+  letter-spacing: .04em; text-transform: uppercase; color: var(--ds-ink-heading); text-shadow: 0 1px 7px var(--ds-scrim); }
