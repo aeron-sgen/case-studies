@@ -549,3 +549,114 @@ html.is-drawer-open .dzf-p-sticky { transform: translateY(110%) !important; visi
 .rs-jrn__body > h3.mc-sr { position: static; width: auto; height: auto; margin: 0 0 var(--ds-space-2xs); padding: 0; clip: auto; clip-path: none;
   overflow: visible; white-space: normal; border: 0; font-family: var(--ds-font-display); font-size: 17px; font-weight: 800; line-height: 1.2;
   letter-spacing: .04em; text-transform: uppercase; color: var(--ds-ink-heading); text-shadow: 0 1px 7px var(--ds-scrim); }
+
+/* ---- polish batch 2026-11-20 --------------------------------------------------------------------------------------------
+   Added by hand to this built file, after the B2/B3/B7/H44 block; the kit source (shell/build-kit.mjs inputs) does not have it yet.
+   Ids are the gap report's (audits/dispenza-case-studies-gap-2026-11-19/data/report-data.json). Phone < 768px, tablet 768-1023px.
+   Every page's own <style> loads AFTER this file, so a rule that meets a page rule carries one more class than it. */
+
+/* O4  sticky "Book my demo" bar: its #15161af5 ground let page content show through. Same colour, fully opaque. */
+.dzf-p-sticky { background: var(--dzf-bg, #15161a); }
+
+/* B6  hero -> section rail, phones and tablets: the hero's closing hairline (hr.tc-head__seal: 96px under the hero, plus 40px
+       under it on phones) sat above the rail, whose first link draws its own top line 64px further down, so ~160-200px of empty
+       band held two lines. Below 1024px the seal goes and the rail sits one section gap (96px) under the hero. Desktop keeps the
+       seal (the rail stands beside the text there, not under the hero).
+       Between sections, multi-store pages: the summary block (.csx-all) ends on its figures' bottom line, and the next store
+       (.csx-store) opened with a second line 96px lower plus 64px of padding. That store keeps only the 96px section gap. */
+@media (max-width: 1023.98px) {
+  .tc-head .tc-head__seal { display: none; }
+  .tc-head + .tc-doc .tc-rail { margin-top: var(--ds-space-2xl); }
+}
+.csx-all + .csx-store { padding-top: 0; border-top: 0; }
+
+/* N1  the store's COUNTY / CITY / AROUND THE STORE strip: three columns at 375px left the figures cramped and off one line.
+       Under 560px it is 2 + 1 (AROUND THE STORE takes the second row), so the two figures in a row share one baseline.
+       Two-tab strips are already two columns and are not touched. */
+@media (max-width: 559.98px) {
+  .csx-zoom .tc-metrics.csx-zoom__tabs--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .csx-zoom .csx-zoom__tabs--3 > .csx-zoom__tab:nth-child(3) { grid-column: 1 / -1; border-left: 0; padding-left: 0; }
+  .csx-zoom.is-tabbed .csx-zoom__tabs--3 > .csx-zoom__tab:nth-child(3)::after { left: 0; }
+}
+
+/* N2  town / county card grids (.csx-near__list) are two columns on phones (and now on tablets, see N3): an odd count left the
+       last card alone beside an empty half. That lone last card spans the row. The desktop grid is unchanged. */
+@media (max-width: 1023.98px) {
+  .csx-near .csx-near__list > .csx-near__town:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+
+/* N3  the same cards: the name and the "of ..." line balance their lines (no lone me" on a line); tablets get two columns
+       instead of the four ~170px ones the 150px auto-fill made at 768px; on phones the rank figure comes first in each card,
+       so it sits at the same height across a row whatever the length of the name. */
+.csx-near__name, .csx-near__of { text-wrap: balance; }
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .csx-near .csx-near__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767.98px) {
+  .csx-near .csx-near__rank { order: -1; }
+}
+
+/* O2  older template, KPI HIGHLIGHTS and CUSTOMER ACTIONS: three stats in the two-column .tc-metrics grid left the third alone.
+       The lone last cell spans the row. */
+.tc-sec[id$="-kpi"] .tc-metrics > .tc-metric:last-child:nth-child(odd),
+.tc-sec[id$="-actions"] .tc-metrics > .tc-metric:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+/* T18 newer template, ITS FULL REACH / ACROSS ALL STORES figures (.tc-metrics.csx-big, two columns at every width): one or three
+       stats left an orphan cell. The lone last cell spans the row. */
+.tc-metrics.csx-big > .tc-metric:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+/* N9  KPI HIGHLIGHTS, newer template: some cells carry a small line between figure and label and some do not, so the labels in
+       a row sat at different heights. Every cell is a column with its label at the bottom (4px minimum gap kept). */
+.csx-page .tc-sec[id$="-kpi"] .tc-metrics > .tc-metric { display: flex; flex-direction: column; }
+.csx-page .tc-sec[id$="-kpi"] .tc-metrics > .tc-metric > .tc-metric__label { margin-top: auto; padding-top: var(--ds-space-2xs); }
+
+/* N8  map-card kicker ("COUNTY · BERNALILLO COUNTY") broke with one word alone on line two: its lines balance. */
+.csx-zoom__bk { text-wrap: balance; }
+
+/* P113 store kicker ("COLORADO SPRINGS · EL PASO COUNTY, CO") left "CO" alone at 375px: its lines balance. */
+.csx-store__place { text-wrap: balance; }
+
+/* P93 Firehouse 'KEYPHRASE: "DISPENSARY NEAR ME"' left 'ME"' alone at 375px: section subheadings balance their lines. */
+.tc-sec > h3.tc-emph { text-wrap: balance; }
+
+/* T3  EVERY TOP-3 SPOT rows on phones: the rank column sized itself row by row, so board names started at different x, and the
+       CITY / COUNTY chip sat inline after short names but wrapped under long ones. The rank gets one fixed 4.5em column ("#1"
+       over "of 233"; the longest, "of 3,340", fits) and the chip always takes its own line under the board name. */
+@media (max-width: 767.98px) {
+  .csx-spots .csx-spots__t tr { grid-template-columns: 4.5em minmax(0, 1fr) auto; }
+  .csx-spots .csx-spots__rank small { display: block; }
+  .csx-spots .csx-spots__lv { display: block; width: fit-content; margin: 4px 0 0; }
+}
+
+/* T4  the same table from 768px up: the SEARCH column (20%) was narrower than a quoted search, so "dispensary near me" wrapped
+       with me" alone. Columns re-split 13 / 32 / 26 / 20 / 9 % (was 15 / 34 / 20 / 21 / 10): at the narrowest table (~614px, in a
+       1024px window) SEARCH keeps ~146px for text, the quoted search needs ~140px (estimated, DM Sans 15px). If a wider fallback
+       font still wraps it, the cell balances its lines. */
+@media (min-width: 768px) {
+  .csx-spots .csx-spots__t th:nth-child(1), .csx-spots .csx-spots__t td:nth-child(1) { width: 13%; }
+  .csx-spots .csx-spots__t th:nth-child(2), .csx-spots .csx-spots__t td:nth-child(2) { width: 32%; }
+  .csx-spots .csx-spots__t th:nth-child(3), .csx-spots .csx-spots__t td:nth-child(3) { width: 26%; text-wrap: balance; }
+  .csx-spots .csx-spots__t th:nth-child(4), .csx-spots .csx-spots__t td:nth-child(4) { width: 20%; }
+  .csx-spots .csx-spots__t th:nth-child(5), .csx-spots .csx-spots__t td:nth-child(5) { width: 9%; }
+}
+
+/* B5  phones and tablets: 44px-tall tap areas made from padding, text at 12px or more; desktop unchanged.
+       Section rail pills (newer template, under 768px): 11px text, ~32px tall -> 12px, 18 + 24 + 2px border = 44px.
+       Store jump chips: ~37px -> 44px. "See it live" links: ~19px -> a 44px box whose negative margins keep the line where it was.
+       (The older template's rail, and the newer one at 768-1023px, is a stacked list whose links are already 12px and ~46px.) */
+@media (max-width: 767.98px) {
+  .csx-doc .tc-rail .tc-rail__link { font-size: 12px; padding-top: 12px; padding-bottom: 12px; }
+}
+@media (max-width: 1023.98px) {
+  .csx-jump .csx-jump__link { min-height: 44px; padding-top: 11px; padding-bottom: 11px; line-height: 20px; box-sizing: border-box; }
+  .csx-zoom__cap .csx-zoom__live { line-height: 20px; padding: 12px 0; margin: calc(var(--ds-space-xs) - 12px) 0 -12px; }
+}
+
+/* P120 (Cannabis Connection) + P155 (Rebud)  phone store jump chips were one swipe row with a hidden scrollbar, and a long first
+       chip filled the screen and hid the rest. Under 768px the chips wrap onto more lines, and a chip longer than the screen wraps
+       inside itself, so every store's chip is on screen. */
+@media (max-width: 767.98px) {
+  .csx-jump .csx-jump__list { flex-wrap: wrap; overflow-x: visible; }
+  .csx-jump .csx-jump__list > li { flex: 0 1 auto; min-width: 0; max-width: 100%; }
+  .csx-jump .csx-jump__link { flex-wrap: wrap; max-width: 100%; box-sizing: border-box; }
+}
