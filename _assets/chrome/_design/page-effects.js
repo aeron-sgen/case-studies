@@ -520,7 +520,10 @@
         render();
       });
 
-      /* THE ONE GESTURE. Fires once, at 15% viewport entry. */
+      /* THE ONE GESTURE. Fires once, at 5% viewport entry. It was 15% (the line sat at y 765 on a
+         900px screen) and the sticky "Book my demo" bar covers the last ~70px, so a band of ~65px
+         above the bar stayed blank until the reader scrolled on (gap report P85). At 5% the line
+         sits under the bar on phones and desktops alike, so whatever has cleared the bar shows. */
       var obs = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
@@ -543,7 +546,7 @@
             : [].slice.call(entry.target.querySelectorAll('[data-count-to]'));
           ns.forEach(function (n) { countUp(n); });
         });
-      }, { rootMargin: '0px 0px -15% 0px', threshold: 0 });
+      }, { rootMargin: '0px 0px -5% 0px', threshold: 0 });
 
       targets.forEach(function (el) { obs.observe(el); });
 
@@ -578,6 +581,105 @@
         window.addEventListener('resize', onScroll, { passive: true });
       }
     })();
+
+
+    /* ---------------------------------------------------------------------------
+       PART C . DISPLAY FIXES (gap report 2026-11-19, added 2026-11-24). Each block
+       only adds a state or a control to markup every page already has, and each is
+       wrapped so a failure can never stop the line below that claims scripting.
+       Their look lives in kit.css (blocks N7, P107, H54, P99).
+       --------------------------------------------------------------------------- */
+
+    /* N7 / P107 . SECTION RAIL: WHERE YOU ARE. The sticky rail beside a case study
+       (THE IMPRINT ... MORE CASE STUDIES) had no current state. The link of the
+       section whose top has passed 30% of the screen gets aria-current="true";
+       none before the first section or after the last one ends. Scroll and resize
+       only, rAF throttled; nothing moves, so keyboard and touch are untouched. */
+    try {
+      (function () {
+        var items = [];
+        [].slice.call(document.querySelectorAll('.tc-rail .tc-rail__link[href^="#"]:not(.tc-tabs__link)')).forEach(function (a) {
+          var id = a.getAttribute('href').slice(1);
+          var sec = id ? document.getElementById(id) : null;
+          if (sec) items.push({ a: a, sec: sec });
+        });
+        if (!items.length) return;
+        var cur = null, ticking = false;
+        function pick() {
+          ticking = false;
+          var line = window.innerHeight * 0.3, on = null, best = -Infinity;
+          items.forEach(function (it) {
+            var top = it.sec.getBoundingClientRect().top;
+            if (top <= line && top > best) { best = top; on = it; }
+          });
+          if (on && on.sec.getBoundingClientRect().bottom <= line) on = null;
+          if (on === cur) return;
+          if (cur) cur.a.removeAttribute('aria-current');
+          if (on) on.a.setAttribute('aria-current', 'true');
+          cur = on;
+        }
+        function onScroll() {
+          if (ticking) return;
+          ticking = true;
+          window.requestAnimationFrame(pick);
+        }
+        pick();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+      })();
+    } catch (e) { /* the rail keeps working as plain links */ }
+
+    /* H54 . MENU DRAWER: THIS PAGE'S SECTION. The drawer link to this exact page
+       gets aria-current="page"; the accordion holding a link to this page or to a
+       section above it (/case-studies for every page here) gets
+       data-section-current. Same-site links only, matched on whole path segments. */
+    try {
+      (function () {
+        var drawer = document.getElementById('mobile-drawer');
+        if (!drawer) return;
+        function norm(p) { return (p || '/').replace(/\/index\.html$/, '/').replace(/\/+$/, '') || '/'; }
+        var here = norm(window.location.pathname);
+        [].slice.call(drawer.querySelectorAll('a[href]')).forEach(function (a) {
+          if (a.origin !== window.location.origin) return;
+          var p = norm(a.pathname);
+          if (p === '/') return;
+          var exact = (p === here);
+          if (!exact && here.indexOf(p + '/') !== 0) return;
+          if (exact) a.setAttribute('aria-current', 'page');
+          var sub = a.closest('.acc-sub');
+          var trig = sub && sub.id ? drawer.querySelector('[data-acc="' + sub.id + '"]') : null;
+          if (trig) trig.setAttribute('data-section-current', '');
+        });
+      })();
+    } catch (e) { /* the drawer works the same without the marks */ }
+
+    /* P99 . STICKY "BOOK MY DEMO" BAR: A WAY TO CLOSE IT. The bar showed from the
+       third screen to the end of every page with no way to dismiss it. A close
+       button (button.dzf-p-sticky__x, a real <button>: click, tap, Enter, Space)
+       hides it for the rest of the visit; the choice is kept in sessionStorage
+       when the browser allows it. kit.js still decides when the bar is "on"; the
+       is-dismissed class only keeps it off screen. */
+    try {
+      (function () {
+        var bar = document.querySelector('[data-dzr-sticky]');
+        if (!bar) return;
+        var KEY = 'dzr-sticky-off';
+        try { if (window.sessionStorage.getItem(KEY) === '1') bar.classList.add('is-dismissed'); } catch (e) { /* storage blocked */ }
+        var x = bar.querySelector('.dzf-p-sticky__x');
+        if (!x) {
+          x = document.createElement('button');
+          x.type = 'button';
+          x.className = 'dzf-p-sticky__x';
+          x.setAttribute('aria-label', 'Close');
+          x.innerHTML = '<span aria-hidden="true">&times;</span>';
+          (bar.querySelector('.dzf-p-sticky__in') || bar).appendChild(x);
+        }
+        x.addEventListener('click', function () {
+          bar.classList.add('is-dismissed');
+          try { window.sessionStorage.setItem(KEY, '1'); } catch (e) { /* storage blocked: closed for this page only */ }
+        });
+      })();
+    } catch (e) { /* the bar stays as it was */ }
 
 
     // LAST: only now claim scripting. Everything above is registered, so the hide

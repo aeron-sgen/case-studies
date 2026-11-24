@@ -20,7 +20,7 @@
 <link rel="icon" type="image/svg+xml" href="/case-studies/_assets/chrome/assets/favicon.svg">
 <link rel="preload" as="font" type="font/woff2" href="/case-studies/_assets/chrome/assets/fonts/Montserrat-Variable.woff2" crossorigin>
 <link rel="stylesheet" href="/case-studies/_assets/chrome/_design/site-sheets.css?v=2e23a620">
-<link rel="stylesheet" href="/case-studies/_assets/kit.css?v=6818d309">
+<link rel="stylesheet" href="/case-studies/_assets/kit.css?v=ea0e32b8">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://dispenza.com/#organization","name":"Dispenza","url":"https://dispenza.com/","logo":"https://dispenza.com/sites/sgen_dispenza_com/uploads/2024/12/Rectangle1.webp","image":"https://dispenza.com/sites/sgen_dispenza_com/uploads/2024/12/Rectangle1.webp"},{"@type":"WebPage","@id":"https://dispenza.com/case-studies/firehouse#webpage","url":"https://dispenza.com/case-studies/firehouse","name":"Firehouse 365: +180% Website Visits, +161% Calls | Dispenza","description":"Firehouse 365 lifted local search rankings and store visits in under 30 days. See the KPIs, share of local voice and customer actions behind the growth.","inLanguage":"en-US","isPartOf":{"@type":"WebSite","@id":"https://dispenza.com/#website","url":"https://dispenza.com/","name":"Dispenza"},"about":[{"@id":"https://dispenza.com/case-studies/firehouse#client"}],"publisher":{"@id":"https://dispenza.com/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://dispenza.com/sites/sgen_dispenza_com/uploads/2026/09/firehouse365_multi.webp"},"breadcrumb":{"@id":"https://dispenza.com/case-studies/firehouse#breadcrumb"}},{"@type":"Article","@id":"https://dispenza.com/case-studies/firehouse#article","headline":"FIREHOUSE 365 CASE STUDY","alternativeHeadline":"FIREHOUSE SEES A MASSIVE BOOST IN LOCAL SEARCH RANKINGS IN LESS THAN 30 DAYS","description":"Firehouse 365 lifted local search rankings and store visits in under 30 days. See the KPIs, share of local voice and customer actions behind the growth.","mainEntityOfPage":{"@id":"https://dispenza.com/case-studies/firehouse#webpage"},"author":{"@id":"https://dispenza.com/#organization"},"publisher":{"@id":"https://dispenza.com/#organization"},"image":"https://dispenza.com/sites/sgen_dispenza_com/uploads/2026/09/firehouse365_multi.webp","about":[{"@type":"Store","@id":"https://dispenza.com/case-studies/firehouse#client","name":"Firehouse 365","url":"https://firehouse365.com","address":{"@type":"PostalAddress","streetAddress":"6118 S Atlantic Blvd","addressLocality":"Maywood","addressRegion":"CA","postalCode":"90270","addressCountry":"US"}}]},{"@type":"BreadcrumbList","@id":"https://dispenza.com/case-studies/firehouse#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://dispenza.com/"},{"@type":"ListItem","position":2,"name":"Case Studies","item":"https://dispenza.com/case-studies"},{"@type":"ListItem","position":3,"name":"Firehouse 365","item":"https://dispenza.com/case-studies/firehouse"}]}]}</script>
 <style id="cs-live-css">
 /* src/cs-live.css - the live porter's few additions to the owner's case pages (CONTRACT-CS.md 6.6). Inlined in the head.
@@ -723,8 +723,16 @@ if(d.readyState==='complete')setTimeout(go,0);else w.addEventListener('load',fun
 </div>
 </footer>
 <!-- /dzr:chrome-footer -->
-<script src="/case-studies/_assets/chrome/_design/page-effects.js?v=7c7166f2" defer></script>
+<script src="/case-studies/_assets/chrome/_design/page-effects.js?v=37b1c32b" defer></script>
 <script src="/case-studies/_assets/chrome/cta-events.js?v=dbc812d7" defer></script>
 <script src="/case-studies/_assets/kit.js" defer></script>
+<script>/* First screen: the shared reveal fires at 15% viewport entry, so hero copy that starts in the bottom 15% of the
+   first screen (the intro at 1440x900, the CTA at 1024x768) stayed at opacity 0 until a scroll. DOMContentLoaded runs
+   after page-effects.js has booted; show the hero reveal targets that are already on screen. The check runs again on window
+   load and when the web fonts are ready, because the hero can still move after DOMContentLoaded. Display only. */
+document.addEventListener('DOMContentLoaded',function(){var h=document.querySelector('.tc-head');if(!h||!('IntersectionObserver' in window))return;
+var els=[].slice.call(h.querySelectorAll('[data-reveal],[data-media-in]'));
+function once(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('is-in');});io.disconnect();});els.forEach(function(el){io.observe(el);});}
+once();window.addEventListener('load',once);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(once);});</script>
 </body>
 </html>

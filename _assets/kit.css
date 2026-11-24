@@ -660,3 +660,620 @@ html.is-drawer-open .dzf-p-sticky { transform: translateY(110%) !important; visi
   .csx-jump .csx-jump__list > li { flex: 0 1 auto; min-width: 0; max-width: 100%; }
   .csx-jump .csx-jump__link { flex-wrap: wrap; max-width: 100%; box-sizing: border-box; }
 }
+
+/* ---- display batch 2026-11-24 (gap-report ids; tested in place after kit.css) ------------------------------------------
+   Added by hand to this built file, after the polish batch 2026-11-20 block; the kit source (shell/build-kit.mjs inputs) does not
+   have it yet. Ids are the gap report's. Blocks in package order: chrome, hero, blocksA, blocksB; each runs from its id comment
+   to its "end <id>" comment and can be removed on its own (so a few rules repeat: H35/P73, H34/P82/P96, P71/P134).
+   Phone < 768px, tablet 768-1023px, desktop 1024px+. Every page's own <style> loads AFTER this file, so a rule that meets a
+   page rule carries more classes than it. Display only: no word, number, link, image or order of content is changed. */
+
+/* N7 newer template (35 pages): the sticky section rail had no current-section state. page-effects.js now sets
+       aria-current="true" on the rail link of the section being read; it shows the link's own hover look (white text and
+       the 2px accent rule over it). Below 1024px the rail is a row of pills, so the current pill gets an accent border. */
+.csx-doc .tc-rail .tc-rail__link[aria-current="true"] { color: var(--ds-ink-heading); }
+.csx-doc .tc-rail .tc-rail__link[aria-current="true"]::after { opacity: 1; }
+@media (max-width: 1023.98px) {
+  .csx-doc .tc-rail .tc-rail__link[aria-current="true"] { border-color: var(--ds-accent); }
+}
+/* end N7 */
+
+/* P107 older template (firehouse, flwrco, norcal, nuleafnv, tcg): the same current-section state on its rail. */
+.tc-doc:not(.csx-doc) .tc-rail .tc-rail__link[aria-current="true"] { color: var(--ds-ink-heading); }
+.tc-doc:not(.csx-doc) .tc-rail .tc-rail__link[aria-current="true"]::after { opacity: 1; }
+@media (max-width: 1023.98px) {
+  .tc-doc:not(.csx-doc) .tc-rail .tc-rail__link[aria-current="true"] { border-color: var(--ds-accent); }
+}
+/* end P107 */
+
+/* H35 phone menu drawer (all 41 pages): with Services open the list pushed Contact and the drawer's BOOK DEMO button out of
+       view. The link list is now the part that scrolls; the logo row and the BOOK DEMO footer stay pinned. Its last 56px fade
+       out, so the row at the bottom edge fades when more rows sit below, and 56px of bottom padding lets the last row
+       clear the fade once scrolled to the end.
+       Closed, the list is shorter than the drawer, so nothing moves. */
+#mobile-drawer .drawer-nav { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding-bottom: 56px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 56px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 56px), transparent); }
+#mobile-drawer .drawer-head, #mobile-drawer .drawer-cta { flex-shrink: 0; }
+/* end H35 */
+
+/* P73 cookies (same drawer as H35, the hub's issue): the rules are identical, repeated so either block can be removed alone. */
+#mobile-drawer .drawer-nav { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding-bottom: 56px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 56px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 56px), transparent); }
+#mobile-drawer .drawer-head, #mobile-drawer .drawer-cta { flex-shrink: 0; }
+/* end P73 */
+
+/* H54 menu drawer: the accordion arrows were 9px glyphs; they are 14px. The section the page belongs to is marked:
+       page-effects.js sets data-section-current on the drawer group that holds this page (Results, on every page here) and
+       aria-current="page" on the drawer link to this exact page; both take the site's drawer "current" colour. */
+#mobile-drawer .rail__caret { width: 14px; height: 14px; }
+#mobile-drawer .acc-trigger[data-section-current] { color: var(--ds-accent-ink); }
+#mobile-drawer .acc-sub a[aria-current="page"] { color: var(--ds-accent-ink); }
+/* end H54 */
+
+/* P69 newer template: the COUNTY / CITY / AROUND THE STORE tabs that switch the map looked like a row of static figures,
+       the unselected ones like dimmed, disabled stats. Each tab is now a bordered card: the selected one in accent (border,
+       soft fill, its 3px top bar kept inside the card), the others on the glass fill with a line border that lights up on
+       hover. Cards sit 8px apart (6px on phones). Every card's text has the same inset, 16px (10px on phones): the first
+       card's text was flush with its edge, and 16px rather than the other tabs' 24px gives back the width the gap and
+       border take, so few lines wrap that did not before. Only tab strips the page script turned into tabs (.is-tabbed,
+       2+ views) change; one-view strips stay as they were.
+       The cue that they are a set to pick from is a radio mark at the right end of each card's big figure, level with it.
+       Every figure ends at least 36px short of the mark, so it never meets text and no text line is narrowed for it.
+       An empty ring on the other views (accent on hover), an accent ring with a dot on the view the map shows. It is
+       drawn in CSS (no text, so the tab's accessible name is unchanged).
+       The other views' figures were 46% white, which read as disabled; they are 80% white (full white on hover), still
+       a step below the selected view's accent gradient. */
+.csx-page .csx-zoom.is-tabbed .tc-metrics.csx-zoom__tabs { gap: var(--ds-space-xs); border-bottom: 0; }
+.csx-page .csx-zoom.is-tabbed .csx-zoom__tabs > .csx-zoom__tab { border: 1px solid var(--ds-glass-border); border-radius: var(--ds-r-control);
+  background: var(--ds-glass-bg); padding-left: 16px; }
+.csx-page .csx-zoom.is-tabbed .csx-zoom__tabs > .csx-zoom__tab:hover { border-color: color-mix(in srgb, var(--ds-accent) 55%, transparent); }
+.csx-page .csx-zoom.is-tabbed .csx-zoom__tabs > .csx-zoom__tab[aria-selected="true"] { border-color: var(--ds-accent); background: var(--ds-accent-soft); }
+.csx-page .csx-zoom.is-tabbed .csx-zoom__tabs > .csx-zoom__tab::after { left: -1px; right: -1px; top: -1px; border-radius: var(--ds-r-control) var(--ds-r-control) 0 0; }
+/* the mark is placed against the card (the tab is position:relative) at its right edge; with no top given it keeps the
+   figure line's own top, and half the figure's 1em line less half its own 12px centres it on the figure */
+.csx-page .csx-zoom.is-tabbed .csx-zoom__tabs > .csx-zoom__tab .tc-metric__figure::after { content: ""; position: absolute; box-sizing: border-box;
+  right: 12px; width: 12px; height: 12px; margin-top: calc(.5em - 6px); border-radius: 50%;
+  border: 2px solid var(--ds-ink-soft); pointer-events: none; }
+.csx-page .csx-zoom.is-tabbed .csx-zoom__tabs > .csx-zoom__tab:hover .tc-metric__figure::after { border-color: var(--ds-accent-ink); }
+.csx-page .csx-zoom.is-tabbed .csx-zoom__tabs > .csx-zoom__tab[aria-selected="true"] .tc-metric__figure::after { border-color: var(--ds-accent-ink);
+  background: radial-gradient(circle, var(--ds-accent-ink) 0 2.5px, transparent 3px); }
+.csx-page .csx-zoom.is-tabbed .csx-zoom__tabs > .csx-zoom__tab[aria-selected="false"] .tc-metric__figure { color: color-mix(in srgb, var(--ds-ink-heading) 80%, transparent); }
+.csx-page .csx-zoom.is-tabbed .csx-zoom__tabs > .csx-zoom__tab[aria-selected="false"]:hover .tc-metric__figure { color: var(--ds-ink-heading); }
+/* when a card's text does wrap, its lines balance (no lone 'me"' or '3' on a line) */
+.csx-page .csx-zoom.is-tabbed .csx-zoom__tab .tc-metric__window,
+.csx-page .csx-zoom.is-tabbed .csx-zoom__tab .tc-metric__label { text-wrap: balance; }
+/* phones: 6px gaps, a 10px inset and the mark 8px in */
+@media (max-width: 767.98px) {
+  .csx-page .csx-zoom.is-tabbed .tc-metrics.csx-zoom__tabs { gap: 6px; }
+  .csx-page .csx-zoom.is-tabbed .csx-zoom__tabs > .csx-zoom__tab { padding-left: 10px; }
+  .csx-page .csx-zoom.is-tabbed .csx-zoom__tabs > .csx-zoom__tab .tc-metric__figure::after { right: 8px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .csx-page .csx-zoom.is-tabbed .csx-zoom__tabs > .csx-zoom__tab .tc-metric__figure::after { transition: border-color var(--ds-dur-fast) var(--ds-ease-out); }
+}
+/* end P69 */
+
+/* P70 newer template, phones: the section-rail pill row scrolls sideways with its scrollbar hidden and nothing showed that
+       more pills follow. Its right edge fades over 40px, and 40px of end padding lets the last pill clear the fade once the
+       row is scrolled to the end. (The store jump chips half of P70 is already fixed: they wrap, kit.css P120/P155.) */
+@media (max-width: 767.98px) {
+  .csx-doc .tc-rail .tc-rail__list { padding-right: 40px;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent); }
+}
+/* end P70 */
+
+/* P81 newer template, tablets (768-1023px): the section rail was a full-width stacked list of 7 grey links (330px) that read
+       like leftover footer links. It is the phone rail's pill style, wrapped: two rows of 44px-tall pills, 12px text. */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .csx-doc .tc-rail .tc-rail__list { display: flex; flex-wrap: wrap; gap: var(--ds-space-xs); border-bottom: 0; }
+  .csx-doc .tc-rail .tc-rail__item { flex: none; }
+  .csx-doc .tc-rail .tc-rail__link { padding: 12px 14px; border: 1px solid var(--ds-glass-border); border-radius: var(--ds-r-pill);
+    background: var(--ds-glass-bg); letter-spacing: .06em; white-space: nowrap; }
+  .csx-doc .tc-rail .tc-rail__link::after { display: none; }
+}
+/* end P81 */
+
+/* P98 older template (firehouse, flwrco, norcal, nuleafnv, tcg), phones and tablets: the section rail was a static grey
+       stacked list (236px) that read as part of the page body. It takes the newer template's rail look: on phones one row of
+       44px pills that scrolls sideways (right edge fades, as P70), on tablets the pills wrap onto two rows.
+       A pill never gets wider than 280px on a phone (screen width - 72px under 352px) or than the list on a tablet: a longer
+       label (norcal's "Key Performance Indicators (KPIs) Highlights for Dispensary Success") wraps inside its pill, onto
+       balanced lines on a phone and filled lines on a tablet (a balanced label would leave the full-width pill half empty).
+       The pills in a row share the tallest pill's height with their label centred, and the 22px corner radius is the pill
+       shape at 44px tall and a rounded box when a label wraps. */
+@media (max-width: 767.98px) {
+  .tc-doc:not(.csx-doc) .tc-rail .tc-rail__list { display: flex; flex-wrap: nowrap; gap: 6px; overflow-x: auto; overscroll-behavior-x: contain;
+    scrollbar-width: none; border-bottom: 0; margin: 0 calc(-1 * var(--ds-space-md)); padding: 0 40px 4px var(--ds-space-md);
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent); }
+  .tc-doc:not(.csx-doc) .tc-rail .tc-rail__list::-webkit-scrollbar { display: none; }
+  .tc-doc:not(.csx-doc) .tc-rail .tc-rail__item { max-width: min(280px, calc(100vw - 72px)); }
+  .tc-doc:not(.csx-doc) .tc-rail .tc-rail__link { padding: 12px; letter-spacing: .06em; text-wrap: balance; }
+}
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .tc-doc:not(.csx-doc) .tc-rail .tc-rail__list { display: flex; flex-wrap: wrap; gap: var(--ds-space-xs); border-bottom: 0; }
+  .tc-doc:not(.csx-doc) .tc-rail .tc-rail__item { max-width: 100%; }
+  .tc-doc:not(.csx-doc) .tc-rail .tc-rail__link { padding: 12px 14px; letter-spacing: .06em; text-wrap: pretty; }
+}
+@media (max-width: 1023.98px) {
+  .tc-doc:not(.csx-doc) .tc-rail .tc-rail__item { flex: none; display: flex; }
+  .tc-doc:not(.csx-doc) .tc-rail .tc-rail__link { display: flex; align-items: center; flex: 1 1 auto; min-width: 0; white-space: normal;
+    border: 1px solid var(--ds-glass-border); border-radius: 22px; background: var(--ds-glass-bg); }
+  .tc-doc:not(.csx-doc) .tc-rail .tc-rail__link::after { display: none; }
+}
+/* end P98 */
+
+/* P99 sticky "Book my demo" bar (all 41 pages): it could not be closed. page-effects.js adds a close button
+       (button.dzf-p-sticky__x, kit.css already styles it: 44x44); closing hides the bar for the rest of the visit (session).
+       From 720px up the button sits in the bar after "Book my demo". On phones the bar has no room for it, so it is a small
+       tab on the bar's top edge at the right (30px tall, a 44px tap area with the 14px above it). */
+.dzf-p-sticky.is-dismissed { transform: translateY(110%) !important; visibility: hidden; }
+.dzf-p-sticky .dzf-p-sticky__x { display: inline-flex; align-items: center; justify-content: center; padding: 0; line-height: 1; font-size: 28px; }
+.dzf-p-sticky .dzf-p-sticky__x:focus-visible { outline: 2px solid var(--dzf-accent-ink); outline-offset: 2px; }
+.dzf-p-sticky .dzf-p-sticky__t { margin-right: auto; } /* with a third item in the space-between row, the button stays at the right, beside the close button */
+/* while the bar is off screen (translateY 110%) the phone tab above it would still peek in at the screen's bottom edge: it
+   hides with the bar (after the bar's .25s slide) and otherwise inherits the bar's visibility (B3, is-dismissed) */
+.dzf-p-sticky:not(.is-on) .dzf-p-sticky__x { visibility: hidden; }
+.dzf-p-sticky .dzf-p-sticky__x { transition: visibility 0s linear .25s; }
+.dzf-p-sticky.is-on .dzf-p-sticky__x { transition-delay: 0s; }
+@media (max-width: 719px) {
+  .dzf-p-sticky .dzf-p-sticky__x { position: absolute; right: 10px; bottom: 100%; width: 44px; height: 30px; font-size: 20px;
+    background: var(--dzf-bg, #15161a); border: 2px solid var(--dzf-accent); border-bottom: 0; border-radius: 10px 10px 0 0; }
+  .dzf-p-sticky .dzf-p-sticky__x::before { content: ""; position: absolute; left: -2px; right: -2px; bottom: 100%; height: 14px; }
+  .dzf-p-sticky .dzf-p-sticky__x:hover { background: var(--dzf-bg, #15161a); }
+}
+/* end P99 */
+
+/* H30 sticky bar from 720px up: its copy and button spanned x 136-1304 at 1440px, against the content column's 184-1256.
+       Its inner row now has the page container's width and side padding (1120px, 24px), so its edges are the column's at
+       every width. Its button had 12px corners, a gradient and a glow; it is the site's solid pill (.btn--solid look:
+       pill radius, flat primary, the resting shadow). The label difference (BOOK MY DEMO / BOOK DEMO) is words: not changed. */
+@media (min-width: 720px) {
+  .dzf-p-sticky .dzf-p-sticky__in { max-width: var(--ds-container-max, 1120px); padding-left: var(--ds-space-md); padding-right: var(--ds-space-md); }
+}
+.dzf-p-sticky .dzf-p-btn { border-radius: var(--ds-r-pill); background: var(--ds-primary); box-shadow: var(--ds-shadow-rest); }
+/* end H30 */
+
+/* H33 footer menu, phones: the 8 links wrapped into ragged rows of 3, 2, 2 and 1, 68px apart. They are a two-column grid
+       of 44px rows, 4px apart. Tablet and desktop keep the inline row. */
+@media (max-width: 767.98px) {
+  .site-footer .f-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px var(--ds-space-md); }
+}
+/* end H33 */
+
+/* H34 footer "Markets we work in": the label was 11px, the page's only text under 12px; it is 12px. The market links were
+       forced to Title Case ("Agency In Louisiana"); they show their own sentence case ("agency in Louisiana"), same words.
+       (The list of markets itself is content and is not changed.) */
+.site-footer .f-label { font-size: var(--ds-step-micro); }
+.site-footer .f-market-links a { text-transform: none; }
+/* end H34 */
+
+/* P82 footer on tablets: the two rows of footer menu links were 68px apart (44px links + 24px gap), looser than the market
+       list under them; the gap is 4px (48px pitch). The market links' forced Title Case goes, as in H34. */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .site-footer .f-links { row-gap: 4px; }
+}
+.site-footer .f-market-links a { text-transform: none; }
+/* end P82 */
+
+/* B5 remainder, newer template: the map labels were still under 12px on phones and tablets: the tab kickers
+       COUNTY / CITY / AROUND THE STORE and the tab place lines such as BERNALILLO COUNTY (10px on phones; 12px from 768px
+       already), and the map card kicker "COUNTY · Bernalillo County" (10px on phones, 11px on tablets). All are 12px.
+       Desktop is unchanged. */
+@media (max-width: 767.98px) {
+  .csx-page .csx-zoom .csx-zoom__k,
+  .csx-page .csx-zoom .csx-zoom__tab .tc-metric__label { font-size: 12px; }
+}
+@media (max-width: 1023.98px) {
+  .csx-page .csx-zoom .csx-zoom__bk { font-size: 12px; }
+}
+/* end B5 */
+
+/* N5  hero map tiles, phones and tablets (the hero is one column under 1024px): the caption sat on top of the map's lower half
+       (130 of 246px at 375px), hiding the map and its own key. Under 1024px the caption is a row under the map, the rank badge
+       on its left (the order stays badge, then caption) - the way the page's own map views already put their figure under the
+       map. The map itself is not covered at all. (Desktop: one-map heroes do the same in N6; two-map and rail tiles keep
+       the overlay.)
+   P114 the same change takes the "#1" badge off the map, so it no longer hides "PALMER LAKE" (Biomeds) on phones; N6 does
+       the same on desktop, where the badge had covered half of the town's marker. */
+@media (max-width: 1023.98px) {
+  .tc-head__media .csx-tile .csx-tile__a { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; }
+  .tc-head__media .csx-tile .csx-tile__a > img { grid-column: 1 / -1; grid-row: 1; }
+  .tc-head__media .csx-tile .csx-tile__a > .csx-tile__rank { position: static; grid-column: 1; grid-row: 2; align-self: center;
+    margin: var(--ds-space-sm) 0 var(--ds-space-sm) var(--ds-space-sm); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .tc-head__media .csx-tile .csx-tile__a > .csx-tile__label { position: static; grid-column: 2; grid-row: 2; min-width: 0;
+    padding: var(--ds-space-sm); background: none; text-shadow: none; }
+}
+/* end N5 */
+
+/* N6  desktop hero, newer template: the map column was mostly empty under its tiles.
+       Two-store heroes (two 4:3 tiles side by side, 185px tall next to ~560px of text): the two tiles stack, keep their 4:3
+       shape (so each map is cropped exactly as before: legends and outlines stay in frame) and together take the text's
+       height; their width follows from that height and they sit centred in the column. contain: size keeps the tiles from
+       making the hero taller: the text alone sets its height.
+       One-map heroes: the caption leaves the map and becomes a row under it (as on phones), so the card is taller, nothing
+       covers the map, and the card sits at the middle of the text's height. Many-map rails: centred the same way. */
+@media (min-width: 1024px) {
+  .csx-head .tc-head__media > .csx-mosaic:not(.csx-mosaic--1):not(.csx-mosaic--rail) { grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: minmax(0, 1fr); height: 100%; contain: size; }
+  .csx-head .tc-head__media > .csx-mosaic:not(.csx-mosaic--1):not(.csx-mosaic--rail) > .csx-tile { height: 100%; width: auto;
+    max-width: 100%; aspect-ratio: 4 / 3; justify-self: center; }
+  .csx-head .tc-head__media > .csx-mosaic:not(.csx-mosaic--1):not(.csx-mosaic--rail) > .csx-tile > .csx-tile__a { height: 100%; }
+  .csx-head .tc-head__media > .csx-mosaic:not(.csx-mosaic--1):not(.csx-mosaic--rail) > .csx-tile > .csx-tile__a > img {
+    position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; }
+  .csx-head .tc-head__grid--media > .tc-head__media:has(> .csx-mosaic--1),
+  .csx-head .tc-head__grid--media > .tc-head__media:has(> .csx-mosaic--rail) { align-self: center; }
+  .csx-head .tc-head__media > .csx-mosaic--1 > .csx-tile > .csx-tile__a { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; }
+  .csx-head .tc-head__media > .csx-mosaic--1 > .csx-tile > .csx-tile__a > img { grid-column: 1 / -1; grid-row: 1; }
+  .csx-head .tc-head__media > .csx-mosaic--1 > .csx-tile > .csx-tile__a > .csx-tile__rank { position: static; grid-column: 1; grid-row: 2;
+    align-self: center; margin: var(--ds-space-sm) 0 var(--ds-space-sm) var(--ds-space-md); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .csx-head .tc-head__media > .csx-mosaic--1 > .csx-tile > .csx-tile__a > .csx-tile__label { position: static; grid-column: 2; grid-row: 2;
+    min-width: 0; padding: var(--ds-space-sm) var(--ds-space-md); background: none; text-shadow: none; }
+}
+/* end N6 */
+
+/* O1  older template hero (firehouse, flwrco, norcal, nuleafnv, tcg): the second headline was as big as the name (62px
+       vs 72px at 1440, both 38px on phones) and pushed the "Book my demo" button far below the first screen. It takes the
+       newer template's long-headline size, so the name leads. The button sits 24px (was 40px) under the lede, and on phones
+       the lede is 16px / 1.6 (was 17px / 1.72), so the button is in the first screen at every width (FLWR CO's 12-line
+       lede is the longest). Desktop: the copy column is the text measure (640px, as before), the device shot takes the
+       rest (368px at 1440, was 320px) and sits at the middle of the text. */
+.tc-head:not(.csx-head) .tc-head__copy > .mc-head { font-size: clamp(26px, 2.5vw, 36px); line-height: 1.1; }
+.tc-head:not(.csx-head) .tc-head__copy > .mc-actions { margin-top: var(--ds-space-md); }
+@media (max-width: 767.98px) {
+  .tc-head:not(.csx-head) .tc-head__copy > .tc-head__lede { font-size: 16px; line-height: 1.6; }
+}
+@media (min-width: 1024px) {
+  .tc-head:not(.csx-head) .tc-head__grid--media { grid-template-columns: minmax(0, var(--ds-measure)) minmax(var(--tc-media), 1fr); }
+  .tc-head:not(.csx-head) .tc-head__grid--media > .tc-head__media { align-self: center; }
+}
+/* end O1 */
+
+/* B6  remainder, older template: the hero's facts card closed on its own bottom line, and the next line (the hero's seal from
+       1024px, the section rail's first line below that) came ~76px later, so the band held two lines. The card's last row
+       drops its bottom line; the band keeps its spacing and one line. */
+.tc-head .tc-vcard .tc-rows > .tc-rows__row:last-child { border-bottom: 0; }
+/* end B6 */
+
+/* B4  closing "Book demo / How it works" pair: it floated 96px under the last case card and 160px over the footer card.
+       It sits one block gap (40px) under the cards, and the article's 64px end padding goes, so the footer's own 96px is the
+       gap below. (A heading or line of copy for this block would be new words: not done here.) */
+.tc-doc .tc-sec > .tc-cases + .tc-close { margin-top: var(--ds-space-lg); }
+.tc-doc:has(.tc-sec > .tc-cases + .tc-close) { padding-bottom: 0; }
+/* end B4 */
+
+/* P130 Halfpipe Cannabis site frames: both screenshots start with a blank white band (the capture missed the store's top bar):
+        129 of 900 rows (desktop), 273 of 1688 (phone). Each frame shows the image from its first non-blank row: the frame
+        takes that shape and the picture is anchored to its bottom edge. Nothing else is cropped. The hover clip keeps its
+        own top-anchored framing (its frames show the store's header at the top), so only its bottom ~14% falls outside. */
+.csx-browser .dzr-site__media:has(> img[src$="/sites/halfpipecannabis/desktop.webp"]) { aspect-ratio: 1440 / 771; }
+.csx-browser .dzr-site__media > img[src$="/sites/halfpipecannabis/desktop.webp"] { object-position: center bottom; }
+.csx-phone .csx-phone__screen > img[src$="/sites/halfpipecannabis/mobile.webp"] { aspect-ratio: 780 / 1415; object-position: center bottom; }
+/* end P130 */
+
+/* P137 site frame address bar, phones: the store's domain was cut to "legacy-dispensary...." (9 pages; the longest,
+        bigsurcannabotanicals.com, needs ~153px at 12px and had 116px). Under 768px the three window dots go and the address
+        pill takes the bar's width, so every domain on these pages shows whole at 375px. */
+@media (max-width: 767.98px) {
+  .csx-browser .csx-browser__bar > i { display: none; }
+  .csx-browser .csx-browser__bar > .csx-browser__url { margin-left: 0; }
+}
+/* end P137 */
+
+/* O3  older template, CUSTOMER ACTIONS charts (Firehouse, FLWR CO): each chart image is a white chart card inside a wide dark
+       frame (~80px each side, ~70px top and bottom of 1000x548), which shrank the chart. The frame is cropped off, so the
+       chart card fills the plate (~18-21% bigger at every width). Per image, 2px kept round the card. The baked-in tooltip and
+       the small legend text need a re-export: not done here. */
+.tc-sec[id$="-actions"] > figure.tc-plate:has(> img[src$="/proof/firehouse/01_firehouse_actions.webp"]) { aspect-ratio: 827 / 401; }
+.tc-sec[id$="-actions"] > figure.tc-plate > img[src$="/proof/firehouse/01_firehouse_actions.webp"] { width: 120.92%; max-width: none; margin: -8.83% 0 0 -10.52%; }
+.tc-sec[id$="-actions"] > figure.tc-plate:has(> img[src$="/proof/firehouse/02_firehouse_views.webp"]) { aspect-ratio: 844 / 401; }
+.tc-sec[id$="-actions"] > figure.tc-plate > img[src$="/proof/firehouse/02_firehouse_views.webp"] { width: 118.48%; max-width: none; margin: -8.65% 0 0 -9.24%; }
+.tc-sec[id$="-actions"] > figure.tc-plate:has(> img[src$="/proof/flwrco/flwrco_1.webp"]) { aspect-ratio: 827 / 401; }
+.tc-sec[id$="-actions"] > figure.tc-plate > img[src$="/proof/flwrco/flwrco_1.webp"] { width: 120.92%; max-width: none; margin: -7.74% 0 0 -10.28%; }
+.tc-sec[id$="-actions"] > figure.tc-plate:has(> img[src$="/proof/flwrco/flwrco_2.webp"]) { aspect-ratio: 844 / 400; }
+.tc-sec[id$="-actions"] > figure.tc-plate > img[src$="/proof/flwrco/flwrco_2.webp"] { width: 118.48%; max-width: none; margin: -9.12% 0 0 -9.12%; }
+/* end O3 */
+
+/* P146 older template, CUSTOMER ACTIONS charts that are smaller than the column (NorCal 581/597px, TCG 591/594px, NuLeaf 633px
+        wide) were stretched to ~757px at 1440 and ~718px at 768, so their text went soft. Each plate is capped at its chart's
+        own width plus its 1px borders (the plates are border-box); on narrow screens it still shrinks to the column. The
+        picture keeps width: 100%, so its space is held before the lazy image loads. */
+.tc-sec[id$="-actions"] > figure.tc-plate:has(> img[src$="/proof/norcal/norcal_data_1.webp"]) { max-width: 583px; }
+.tc-sec[id$="-actions"] > figure.tc-plate:has(> img[src$="/proof/norcal/norcal_data_2.webp"]) { max-width: 599px; }
+.tc-sec[id$="-actions"] > figure.tc-plate:has(> img[src$="/proof/tcg/tcg_data_1.webp"]) { max-width: 593px; }
+.tc-sec[id$="-actions"] > figure.tc-plate:has(> img[src$="/proof/tcg/tcg_data_2.webp"]) { max-width: 596px; }
+.tc-sec[id$="-actions"] > figure.tc-plate:has(> img[src$="/proof/nuleafnv/nuleaf_data_1.webp"]),
+.tc-sec[id$="-actions"] > figure.tc-plate:has(> img[src$="/proof/nuleafnv/nuleaf_data_2.webp"]) { max-width: 635px; }
+/* end P146 */
+
+/* P151 NuLeaf "customer actions" chart: ~45% of the image is blank white (110 rows above the chart card, 112 below, of 499).
+        The picture is framed to 633 x 333, centred, which keeps ~27px of white round the card (like the second chart). */
+.tc-sec[id$="-actions"] > figure.tc-plate > img[src$="/proof/nuleafnv/nuleaf_data_1.webp"] { aspect-ratio: 633 / 333; object-fit: cover; object-position: 50% 50%; }
+/* end P151 */
+
+/* T1  client card (.tc-vcard dl.tc-rows, both templates, all 40 store pages): each key sized itself to its text with a 5.5em
+       floor, so values after "Client Name" (101px) and "Top-3 spots" (99px) started 5-7px right of the others. From 561px up
+       (below that site-sheets stacks key over value) every key gets one 6.5em column (111px), so all values start at the
+       same x (spread 7px -> 0 on all 40 pages at 768 / 1024 / 1440). Also the alignment half of P68 and P103. */
+@media (min-width: 561px) {
+  .tc-vcard .tc-rows:not(.tc-rows--inline) > .tc-rows__row > .tc-rows__k { flex: 0 0 6.5em; min-width: 0; }
+}
+/* end T1 */
+
+/* P68  client card, touch screens and under 1024px: the Website link gets a 44px min-height (site-sheets), which made its row
+        73px against 56px for the others (114 vs 97px on phones). The link keeps its 44px tap box; negative block margins of
+        (line height - 44px) / 2 stop it from growing the line, and the overhang stays inside the row's 14px padding.
+        The value alignment half of P68 is the T1 block.
+        Content width, newer template (.csx-page), under 1024px: the client card's row rules and the QUESTIONS item rules
+        stopped at the 640px reading measure (x 664 at 768px) while maps, KPI grid, spots table and case list run 720px (x 744).
+        The card and the question rules now run the full width; the answer text keeps its 640px measure (padding on the right,
+        the pattern blocksB P105 uses for the older template's lists). Desktop keeps its 640px text column. On the newer pages
+        the card rule does what blocksB P105's card rule does, so either block stands alone (P105 also covers the older
+        template). Not changed: the raw https:// link text (a text change). */
+@media (pointer: coarse), (max-width: 1023px) {
+  .tc-vcard .tc-rows:not(.tc-rows--inline) .tc-rows__v a { margin-block: calc((1.6em - 44px) / 2); }
+}
+@media (max-width: 1023.98px) {
+  .csx-page .tc-vcard { max-width: none; }
+  .csx-page .tc-sec.csx-faq > .csx-faq__item { max-width: none; padding-right: max(0px, calc(100% - var(--ds-measure))); }
+}
+/* end P68 */
+
+/* P103  Firehouse client card: the same two faults as P68 (values 7px apart, taller Website row). Fixed by the T1 and P68
+         blocks above; this block has no rules of its own. The raw link text is a text change and is left as it is. */
+/* end P103 */
+
+/* T4  EVERY TOP-3 SPOT table from 768px up (remainder of the kit's T4). The table is table-layout:fixed with percentage
+       columns, which only hold every value on one line when the table is at least ~680px wide. It is narrower in two bands:
+       768-799px windows (670-702px table: "90.9% of the map" left "map" alone in 557 cells at 768) and 1024-1119px windows
+       (613-709px table, the side rail takes room: at 1024 "dispensary near me" wrapped in 40 cells, "map" alone in 1,094,
+       "#1 of 3,340" in 4). In those two bands the rank, search and top-3 columns get fixed widths that hold their longest
+       value on one line (value + 12px cell padding + 1-2px) and do not wrap; the board column takes the rest; the link column
+       keeps its 9%. Every other width keeps the kit's split (800 / 1120 / 1440: 0 wrapped cells before and after).
+       (max() / calc() with a percentage are ignored on fixed-layout cells, hence the bands.) Trade-off at 1024px only: the
+       board column is ~170px (was 196), so 48 long board names wrap at a space ("Androscoggin County, / ME"), against 3. */
+@media (min-width: 768px) and (max-width: 799.98px) {
+  .csx-spots .csx-spots__t th:nth-child(1), .csx-spots .csx-spots__t td:nth-child(1) { width: 90px; white-space: nowrap; }
+  .csx-spots .csx-spots__t th:nth-child(2), .csx-spots .csx-spots__t td:nth-child(2) { width: auto; }
+  .csx-spots .csx-spots__t th:nth-child(3), .csx-spots .csx-spots__t td:nth-child(3) { width: 170px; white-space: nowrap; }
+  .csx-spots .csx-spots__t th:nth-child(4), .csx-spots .csx-spots__t td:nth-child(4) { width: 140px; white-space: nowrap; }
+}
+@media (min-width: 1024px) and (max-width: 1119.98px) {
+  .csx-spots .csx-spots__t th:nth-child(1), .csx-spots .csx-spots__t td:nth-child(1) { width: 89px; white-space: nowrap; }
+  .csx-spots .csx-spots__t th:nth-child(2), .csx-spots .csx-spots__t td:nth-child(2) { width: auto; }
+  .csx-spots .csx-spots__t th:nth-child(3), .csx-spots .csx-spots__t td:nth-child(3) { width: 162px; white-space: nowrap; }
+  .csx-spots .csx-spots__t th:nth-child(4), .csx-spots .csx-spots__t td:nth-child(4) { width: 137px; white-space: nowrap; }
+}
+/* end T4 */
+
+/* T5  store COUNTY / CITY / AROUND THE STORE strip (.csx-zoom__tabs): the small line under a figure ("121 of 121 points for
+       "weed near me"") wrapped with me" alone, which pushed that cell's label 21px below the others; at 1024px "OF ITS GRID IN
+       THE TOP 3" also left "3" alone. The small line and the label balance their lines, and every label sits at the foot of
+       its cell (as the kit's N9 does for KPI HIGHLIGHTS), so labels in a row end on one line. */
+.csx-zoom .csx-zoom__tab > .tc-metric__window,
+.csx-zoom .csx-zoom__tab > .tc-metric__label { text-wrap: balance; }
+.csx-zoom .csx-zoom__tab > .tc-metric__label { margin-top: auto; padding-top: var(--ds-space-2xs); }
+/* end T5 */
+
+/* T6  "SEE IT LIVE ON THE <COUNTY> BOARD ->" under each map wraps on phones (65 of the 173 links) and in the narrower 1024px
+       caption (23; 28 with the N8 block's wider badge), and 11 links at 375px / 12 at 1024px left the arrow alone on line
+       two. The link wraps "pretty": the arrow always keeps the word before it ("... COUNTY / BOARD ->"), 0 lone arrows.
+       That is the outcome the report's own fix asks for ("BOARD&nbsp;->"). Getting more than "BOARD ->" onto line two needs
+       words or markup: balanced lines split two-word places in 17 links at 375px ("LOS / ANGELES", "EL / PASO",
+       "VAN / BUREN"), and taking the arrow out of the line (zero-width or absolutely placed) either changed nothing or put
+       the arrow on its own line / outside the link. A shorter phone label, or non-breaking spaces inside place names, are
+       text / markup changes and are not made. */
+.csx-zoom__cap .csx-zoom__live { text-wrap: pretty; }
+/* end T6 */
+
+/* T7  store hero: the sub-line ("How Flora Terra took ... from Santa / Rosa") left one word alone on 4 pages at 1024px and 12
+       at 1440px, and the lede left one-word last lines ("us.") on 2-5 pages per width. The sub-line balances its lines (also
+       fewer place names split: 1 instead of 4-6), the lede avoids a one-word last line. Not done: place names split inside
+       the hero H2 p.mc-head ("#1 OF 114 IN EL / PASO COUNTY, CO", "SAN / JUAN"). That line is one plain text node with no
+       element around the place name, so CSS cannot keep chosen words together; it needs non-breaking spaces in the page
+       markup (the H2 already balances; pretty and greedy wrapping were measured and leave more lone words). */
+.tc-head__copy .tc-head__lede.mc-body--lead { text-wrap: balance; }
+.tc-head__copy .tc-head__lede:not(.mc-body--lead) { text-wrap: pretty; }
+/* end T7 */
+
+/* T17 store map key (.csx-legend): items flowed in a wrapping row, so keys ended 3+2+1 / 3+2+2 / 3+3+3 with 4-7 different
+       item x positions, or 2+1+1+... on phones. Phones: one item per row. From 660px: two aligned columns sized to their
+       content (2 x positions on every key). The hub's key is not touched (no .csx-page on the hub).
+       An odd last item runs across both columns (it still starts in column 1), so it does not widen column 1: without
+       that, the 5-item city-board keys (last item "A spot the city's board does not count (faint)", 318px) needed 649px
+       at 1024-1090px against 613px, and two labels wrapped with "three" / "(faint)" alone. Same rule as blocksB P84. */
+.csx-page .csx-legend { display: grid; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 660px) {
+  .csx-page .csx-legend { grid-template-columns: repeat(2, minmax(0, max-content)); column-gap: var(--ds-space-lg); justify-content: start; }
+  .csx-page .csx-legend > .csx-legend__i:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+/* end T17 */
+
+/* N8  map-card kicker ("COUNTY · BERNALILLO COUNTY") from 768px up: the badge is capped at 15em, so 40 of the 173 kickers
+       wrapped with "COUNTY ·" alone on line one, or split a place name ("COUNTY · LOS / ANGELES COUNTY"); the kit's balance
+       could not avoid it. The kicker stays on one line and the badge widens to fit it (at most 290px, "TOWN · 42 MI AWAY ·
+       CALUMET CITY"; the caption text keeps at least 299px at 1024); the line under the big figure keeps its old 201px cap,
+       so badges with short kickers do not change. (Phones already give the kicker its own full-width line.)
+       The wider badge leaves the caption sentence beside it a little less room, which raised one-word last lines in those
+       sentences ("top / 3.", "Marina Del / Rey."); the sentence wraps "pretty", so its last line never holds one word. */
+@media (min-width: 768px) {
+  .csx-zoom__cap .csx-zoom__badge { max-width: none; }
+  .csx-zoom__cap .csx-zoom__bk { white-space: nowrap; }
+  .csx-zoom__cap .csx-zoom__bs { max-width: calc(225px - var(--ds-space-md)); }
+}
+.csx-zoom__cap .csx-zoom__capt { text-wrap: pretty; }
+/* end N8 */
+
+/* P135 High Society hero (8 map tiles in 4 rows): from 1024px the mosaic ran ~175-220px below the text column, so its last
+        row stood beside an empty left half. Hero mosaics of 7 or more tiles (4 rows; only High Society) get the text column
+        centred against the mosaic; from 1280px their small tiles also crop to 5:3 (was 4:3), so the mosaic is ~145px shorter
+        and "Book my demo" stays above the fold at 1280x720 (710px), 1366x768 (743px) and 1440x900 (795px); centring alone
+        pushed it below at 1280x720 and 1366x768. Under 1280px the tiles stay 4:3 (at 180px wide a 5:3 tile's label would
+        cover its #1 badge), so there the column is centred only when the window is tall enough to keep the button in view
+        (centred, it ends at up to 688px from 1024 to 1149px, up to 777px from 1150 to 1279px): 1024x768 and iPads in
+        landscape are centred, shorter windows keep today's layout. Nova Farms (5 tiles, a wide first tile) is not matched:
+        centred, its button fell below the fold at 1280x720 and 1366x768. */
+@media (min-width: 1024px) and (max-width: 1149.98px) and (min-height: 740px),
+       (min-width: 1150px) and (max-width: 1279.98px) and (min-height: 800px),
+       (min-width: 1280px) {
+  .tc-head__grid--media:has(> .tc-head__media .csx-mosaic > .csx-tile:nth-child(7)) > .tc-head__copy { align-self: center; }
+}
+@media (min-width: 1280px) {
+  .tc-head__grid--media:has(> .tc-head__media .csx-mosaic > .csx-tile:nth-child(7)) .csx-mosaic > .csx-tile:not(.csx-tile--wide) img { aspect-ratio: 5 / 3; }
+}
+/* end P135 */
+
+/* P96 footer (shared chrome, all 41 pages): "MARKETS WE WORK IN" was 11px; on phones the 8 footer links wrapped 3+2+2+1
+       with Privacy Policy alone, rows 68px apart; on tablets they wrapped 5+3, also 68px apart; from 1024 to 1099px they
+       wrapped 7+1 with Privacy Policy alone. The label is 12px (--ds-step-micro). Under 768px the links are two columns
+       sized to their content, 4 rows of 2, 48px apart; every link stays on one line from 360px up ("Google Maps Rankings"
+       wraps only at 320px). Tablets keep their rows with a 4px gap (48px apart; links stay 44px tall). From 1024 to 1099px
+       the gap between links is 32px (was 40), so all 8 sit on one row as they do from 1100px.
+       The 13 market links were forced to Title Case by CSS ("Dispensary Marketing Agency In Louisiana"); they now show the
+       sentence case written in the markup ("Dispensary marketing agency in Louisiana"): same words, only the forced capitals
+       go. Same rule as the chrome package's H34 / P82. Not done: collapsing the market list behind a disclosure on phones
+       (that hides content and needs markup or script). */
+.site-footer .f-label { font-size: var(--ds-step-micro); }
+.site-footer .f-market-links a { text-transform: none; }
+@media (max-width: 767.98px) {
+  .site-footer .f-links { display: grid; grid-template-columns: repeat(2, auto); justify-content: start; justify-items: start; gap: 4px var(--ds-space-md); }
+}
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .site-footer .f-links { row-gap: 4px; }
+}
+@media (min-width: 1024px) and (max-width: 1099.98px) {
+  .site-footer .f-links { column-gap: 32px; }
+}
+/* end P96 */
+
+/* B7  (remainder) "More case studies" list, all 40 store pages.
+       Tablets (768-1023px): each card stacked its copy over a 720px-wide screenshot (470-580px tall), so the list ran
+       4,500-5,500px (kanna 4,756, firehouse 5,470). The card uses its desktop two-column layout: copy beside a 260px media
+       column (logo + screenshot), so the list is about 1,900-2,400px. Phones keep one column.
+       Newer template (35 pages): every logo sat at a fixed 34px height, so square marks (Harbor Collective, Kanna, Get Bak'd,
+       Lava Leaf, Legacy, MindLift, Zen Garden) were 34x34 next to 130-240px wordmarks. Every logo now gets one box, 44px
+       tall and at most 240px wide (the 260px media column less the chip's padding), contained and left-aligned: square
+       marks are 44x44, wordmarks 44px tall, and the widest three are capped by the 240px (4twenty 240x31, High Society
+       240x29, Joyleaf 240x37), so every chip is 56px tall. The older template's bare logos keep the kit's 56px box.
+       Not done: a store-name line on the older template's Nova Farms and High Society cards (no name text exists in those
+       cards, so it would mean adding text), trimming padded logo files and light versions of dark logos (image work). */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .tc-cases > .tc-case { grid-template-columns: minmax(0, 1fr) var(--tc-case-media); }
+}
+.tc-case .csx-plate > img.tc-case__logo { height: 44px; width: auto; max-width: 240px; object-fit: contain; object-position: left center; }
+/* end B7 */
+
+/* P71 (cookies) "EVERY TOP-3 SPOT" store meta line left "#1" alone on a line at 375px, and "More case studies" eyebrows left one
+       word alone ("Weed Near" / "Me"). Phones: the meta line takes the full summary width under the name (the +/- toggle stays
+       in its own column beside the name), so "Albuquerque, NM · 17 top-3 spots · 9 at #1" fits one line (longest meta on any
+       page, 295px, fits the 297px row). Eyebrows wrap "pretty" (no single last word: "#1 in Hudson County for Weed" / "Near Me";
+       balance was tried and split "San / Leandro" on other cards). The meta rule is the same as P134's, kept in both blocks
+       so either block stands alone. */
+@media (max-width: 767.98px) {
+  .csx-spots .csx-spots__sum > .csx-spots__meta { grid-column: 1 / -1; }
+  .csx-spots .csx-spots__sum::after { grid-row: 1; }
+}
+.tc-case .tc-case__loc { text-wrap: pretty; }
+/* end P71 */
+
+/* P74 (cookies, all newer pages) section body copy (SOLV intro, EVERY TOP-3 SPOT intro, the county zoom paragraph under each
+       map, WHAT WE BUILT) was mid-grey (--ds-ink-soft) while the lead, store lines and FAQ answers are --ds-ink. Those paragraphs
+       take the one body ink. The zoom paragraph ("#1 of 11 on the Bernalillo County, NM board ...") is the 15px sentence in the
+       map's figcaption; the badge, the "See it live" link and the meta lines keep their own colours. */
+.csx-page .tc-sec .tc-copy > p.mc-body { color: var(--ds-ink); }
+.csx-page .csx-zoom__cap .csx-zoom__capt { color: var(--ds-ink); }
+/* end P74 */
+
+/* P76 (cookies, all newer pages) map key: the "A spot where it is not" dot (ink-soft-light at 40% opacity) almost vanished on
+       the key's dark ground. Same 40% fill, plus a thin light ring so the key reads as an empty spot. */
+.csx-legend .csx-legend__i--not-top3 .csx-legend__sw { opacity: 1; background: color-mix(in srgb, var(--sw) 40%, transparent);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / .35); }
+/* end P76 */
+
+/* P84 (cookies, every map key) from 768px up the key was a wrapping flex row, so items started at a different x on every row
+       (3 + 2 + 2). Two content-sized columns, so every row's second item starts at one x and no label has to wrap: equal
+       columns were too narrow for the longest labels at 768 and 1024-1060px ("... in the top / three"). An odd last item runs
+       across both columns (it still starts in column 1), so it does not widen column 1; under 1280px the column gap is the
+       --ds-space-md the key already uses on phones. Labels balance if one ever wraps. Phones keep one item per row. */
+@media (min-width: 768px) {
+  .csx-zoom__view .csx-legend.csx-zoom__key { display: grid; grid-template-columns: repeat(2, minmax(0, max-content)); justify-content: start;
+    align-items: start; }
+  .csx-zoom__view .csx-legend.csx-zoom__key > .csx-legend__i:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .csx-zoom__view .csx-legend.csx-zoom__key .csx-legend__t { text-wrap: balance; }
+}
+@media (min-width: 768px) and (max-width: 1279.98px) {
+  .csx-zoom__view .csx-legend.csx-zoom__key { column-gap: var(--ds-space-md); }
+}
+/* end P84 */
+
+/* P87 (cookies, zen-garden) hero subtitle on csx-head--long pages: from ~1300px the font grew to 42px while the text column
+       narrowed to 508px, so "#1 OF 233 IN / BERNALILLO / COUNTY, NM" left one word alone. The size stops at 37px (the size it
+       already has at 1280px); below ~1276px nothing changes. */
+.tc-head.csx-head--long .tc-head__copy .mc-head { font-size: clamp(28px, 2.9vw, 37px); }
+/* end P87 */
+
+/* P97 (firehouse, every page's footer) "Markets we work in" links were 41px tall on phones (43px on tablets). Touch screens and
+       windows under 1024px get a 44px row; the text stays centred in it. */
+@media (pointer: coarse), (max-width: 1023px) {
+  .f-row--markets .f-market-links a { display: inline-flex; align-items: center; min-height: 44px; box-sizing: border-box; }
+}
+/* end P97 */
+
+/* P105 (firehouse, every page with a client card or list) tablets: the client card rows and the WHAT RAN list dividers stopped
+       at the 640px reading measure (x 664 at 768px) while metrics, plates, rail and cases run the full 720px (x 744). Under
+       1024px the rules run full width and list text keeps the reading measure (the pattern site-sheets uses from 1024px up for
+       lists with logo rows). Desktop unchanged. */
+@media (max-width: 1023.98px) {
+  .tc-vcard { max-width: none; }
+  .tc-sec > .tc-list { max-width: none; }
+  .tc-sec > .tc-list > .tc-list__item:not(.bg-logorow) { padding-right: max(0px, calc(100% - var(--ds-measure))); }
+}
+/* end P105 */
+
+/* P106 (firehouse, tcg) sticky bar at 768px: "... your own map on the" / "call." The bar's text balances its lines. */
+.dzf-p-sticky .dzf-p-sticky__t { text-wrap: balance; }
+/* end P106 */
+
+/* P111 (abatin, 4twenty-market, high-society, zen-garden) two-tab store strip on phones: the AROUND THE STORE window wrapped to
+       two lines, so its label started a line lower than the other cell's, and "OF ITS GRID IN THE TOP" left "3" alone. Both cells
+       share one set of rows (kicker / figure / window / label), so the labels start on one line whatever wraps; window and label
+       balance their lines. Without subgrid support the cells keep today's stacking. */
+@media (max-width: 767.98px) {
+  @supports (grid-template-rows: subgrid) {
+    .csx-zoom .csx-zoom__tabs--2 > .csx-zoom__tab { display: grid; grid-row: span 4; grid-template-rows: subgrid; row-gap: 0;
+      align-content: start; justify-items: start; }
+  }
+  .csx-zoom .csx-zoom__tabs--2 .tc-metric__window, .csx-zoom .csx-zoom__tabs--2 .tc-metric__label { text-wrap: balance; }
+}
+/* end P111 */
+
+/* P122 (cannabis-connection only) phones: the client card's website value, the longest on any page (340px at 17px), broke
+       inside the domain as "...dispensary.co" / "m". On this page only, under 768px, the link scales with the window
+       (at most its 17px) so it stays on one line down to 320px. Every other page's website value already fits one line at 375px. */
+@media (max-width: 767.98px) {
+  #cs-cannabis-connection-kpi .tc-vcard .tc-rows__v a { font-size: min(var(--ds-step-body), 4.1vw); }
+}
+/* end P122 */
+
+/* P134 (high-society) same meta line as P71: "East Lansing, MI · 22 top-3 spots · 10 at" / "#1" and "Mount Pleasant ... 2 at" /
+       "#1" at 375px. Same rule as P71's first one. */
+@media (max-width: 767.98px) {
+  .csx-spots .csx-spots__sum > .csx-spots__meta { grid-column: 1 / -1; }
+  .csx-spots .csx-spots__sum::after { grid-row: 1; }
+}
+/* end P134 */
+
+/* P160 (rootd-in-the-510 + 7 more pages) a teaser with no logo file (Club 78, Abatin) showed its name as bare text where the
+       other teasers show a logo plate. The name sits on the same kind of plate (dark chip, same radius and margin), 56px tall to
+       match the plates after B7 (44px logo + 12px padding). */
+.tc-case .tc-case__media > p.csx-case__name { display: flex; align-items: center; width: fit-content; max-width: 100%; min-height: 56px;
+  box-sizing: border-box; padding: 6px 12px; border-radius: var(--ds-r-control); background: var(--ds-bg-surface-2); }
+/* end P160 */
+
+/* P169 (tcg) CUSTOMER ACTIONS labels showed lowercase ("monthly search listings") while every other stat label on every page is
+       uppercase. Stat labels render uppercase (no other label on any page changes: all others are uppercase already). */
+.tc-metrics .tc-metric__label { text-transform: uppercase; }
+/* end P169 */
