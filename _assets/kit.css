@@ -1277,3 +1277,68 @@ html.is-drawer-open .dzf-p-sticky { transform: translateY(110%) !important; visi
        uppercase. Stat labels render uppercase (no other label on any page changes: all others are uppercase already). */
 .tc-metrics .tc-metric__label { text-transform: uppercase; }
 /* end P169 */
+
+/* ---- fix round 2026-11-25 (gap-report ids; tested in place after kit.css) ------------------------------------------
+   Added by hand to this built file, after the display batch 2026-11-24 block; the kit source (shell/build-kit.mjs inputs) does not
+   have it yet. Ids are the gap report's; each block runs from its id comment to its "end <id>" comment and can be removed on its
+   own. Display only: no word, number, link, image or order of content is changed. */
+
+/* T16 */
+/* T16 (nova-farms) hero: the wide first map tile (Greenville city map, 1400 x 1125) is cropped to 4:3, i.e. 75 source rows go.
+       Centred, 37.5 rows went off the top and sliced the GREENVILLE pill (rows 9-65, its text rows 28-44). The tile now takes
+       ~4 rows off the top and the rest off the bottom: the whole pill shows, and so does the map's last row of points (it ends at
+       row 1049). What goes at the bottom (the outline's lower edge and the map credit, rows ~1085-1124) was already cut by the
+       centred crop. On phones (5:4 rail tile) only 5 rows are cropped and the pill was not cut; it stays whole.
+       Not done: lovely-buds (Spokane County map, "LIBERTY" at the right edge) and swish-cannabis (Los Angeles County map, a lone
+       "A" pill at the left edge): those pills are cut in the image files themselves (both maps show uncropped, image box = frame
+       box), so they need re-rendered maps. */
+.tc-head__media .csx-tile img[src$="/maps/nova-farms/greenville-zoom-city-greenville-combined-outlined.webp"] { object-position: 50% 5%; }
+/* end T16 */
+
+/* P75 */
+/* P75 (cookies; the same "What we built" frames on all 22 newer pages that have them) the desktop caption ("Desktop, as
+       shoppers see it." / "Hover the screen to watch it scroll.") sat inside the browser frame on a ruled strip, the phone
+       caption ("Phone") under its device. Both captions now sit under their frame, centred, 8px below its outer edge, in the
+       same 13px type, so from 768px up they end on one line (they were 1px apart). The browser frame (border, ground,
+       corners, shadow) is drawn round the address bar and screen only, by the figure's ::before, and the hover lift moves to it.
+       Phones: the two frames were side by side, the desktop one ~213px wide, so its page could not be read. Under 768px they
+       stack in their own order: the desktop frame takes the full width (327px at 375), the phone frame sits centred under it
+       at half the width, 24px below the desktop caption. */
+.csx-site > .csx-browser { display: grid; grid-template-columns: minmax(0, 1fr); border: 0; background: none; box-shadow: none; overflow: visible; }
+.csx-site > .csx-browser::before { content: ""; grid-area: 1 / 1 / 3 / 2; border: 1px solid var(--ds-glass-border); border-radius: var(--ds-r-surface);
+  background: var(--ds-bg-surface-2); box-shadow: var(--ds-shadow-card); pointer-events: none; }
+.csx-site > .csx-browser > .csx-browser__bar { grid-area: 1 / 1; margin: 1px 1px 0; }
+.csx-site > .csx-browser > .dzr-site__media { grid-area: 2 / 1; margin: 0 1px 1px; border-radius: 0 0 calc(var(--ds-r-surface) - 1px) calc(var(--ds-r-surface) - 1px); }
+.csx-site > .csx-browser > .csx-browser__cap { grid-area: 3 / 1; margin-top: var(--ds-space-xs); padding: 0; border-top: 0; text-align: center; }
+.csx-site > .csx-browser:hover, .csx-site > .csx-browser:focus-within { box-shadow: none; }
+.csx-site > .csx-browser:hover::before, .csx-site > .csx-browser:focus-within::before { box-shadow: var(--ds-shadow-lift); }
+@media (prefers-reduced-motion: no-preference) {
+  .csx-site > .csx-browser::before { transition: box-shadow var(--ds-dur-fast) var(--ds-ease-out); }
+}
+@media (max-width: 767.98px) {
+  .csx-page .csx-site { grid-template-columns: minmax(0, 1fr); row-gap: var(--ds-space-md); }
+  .csx-page .csx-site > .csx-phone { justify-self: center; width: 50%; }
+}
+/* end P75 */
+
+/* P80 */
+/* P80 (cookies) the phone screenshot (abq-cookiesnm/mobile.webp, 780 x 1688) starts with 355 rows of solid black above the
+       site's blue bar. As for Halfpipe (P130), the frame shows the image from its first non-blank row: it takes that shape
+       (780 x 1333) and the picture is anchored to its bottom edge. Nothing else is cropped. The caption half of P80 (the
+       desktop and phone captions in different places) is the P75 block. */
+.csx-phone .csx-phone__screen > img[src$="/sites/abq-cookiesnm/mobile.webp"] { aspect-ratio: 780 / 1333; object-position: center bottom; }
+/* end P80 */
+
+/* T6 */
+/* T6 (tablet remainder) "SEE IT LIVE ON THE <COUNTY> BOARD ->" under each map: from 768px to about 789px, 12 of the 173
+       links (9 pages) still wrapped as "... <PLACE> COUNTY / BOARD ->"; the longest needs 386px and gets 365px. On tablets
+       (768-1023px) the link's tracking goes from .1em to .05em at the same 12px size, so all 173 sit on one line (the
+       tightest, Sacramento County on zen-garden, has 6px to spare at 768px) and keep their 44px tap height (kit B5).
+       Not done on phones (under 768px): one line there needs 11px text, under the kit B5 block's 12px floor for these links;
+       balanced lines split place names (kit T6 block). From 1024px to about 1085px links still wrap
+       (28 links on 18 pages at 1024px); with no tracking at all 8 still wrap there (Sacramento County needs 333px, has 329px),
+       so desktop is unchanged. */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .csx-zoom__cap .csx-zoom__live { letter-spacing: .05em; }
+}
+/* end T6 */
